@@ -14,21 +14,21 @@
 
 #include <iostream>
 #include <condition_variable>
-#include "Request.cpp"
-#include "QueueProtected.cpp"
+//#include "Request.cpp"
+//#include "QueueProtected.cpp"
 
 
 #include <iostream>
 #include <condition_variable>
-#include "Request.cpp"
-#include "QueueProtected.cpp"
+//#include "Request.cpp"
+//#include "QueueProtected.cpp"
 
 
 class PaySystem
 {
 private:
     std::condition_variable cv_queue;
-    QueueProtected q_request;
+    //QueueProtected q_request;
 
 public:
     PaySystem();
