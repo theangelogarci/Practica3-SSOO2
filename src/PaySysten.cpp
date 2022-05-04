@@ -18,6 +18,12 @@
 #include "QueueProtected.cpp"
 
 
+#include <iostream>
+#include <condition_variable>
+#include "Request.cpp"
+#include "QueueProtected.cpp"
+
+
 class PaySystem
 {
 private:

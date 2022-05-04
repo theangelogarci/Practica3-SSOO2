@@ -32,47 +32,33 @@ class Client
         void restoreCredits();
         void operator () ();
 };
-void Client::operator () (){
-        
-    }
 
-Client::Client(int id)
-{   
-    this->id=id;
-    this->premium = false;
-    toString();
+void Client::operator()() {
+    
 }
-Client::Client(int id, float balance)
-{   
-    this->id=id;
+
+Client::Client(int id) {
+
+}
+
+Client::Client (int id, float balance) {
+    this->id =id;
     this->balance = balance;
     this->premium = true;
     toString();
 }
-int Client::getId(){
+
+int Client::getId() {
     return this->id;
 }
-float Client::getBalance(){
+float Client::getBalance() {
     return this->balance;
 }
-bool Client::isPremium(){
+
+bool Client::isPremium () {
     return this->premium;
 }
-void Client::payCredit(){
-    this->balance--;
-}
-void Client::restoreCredits(){
-    this->balance=100;
-}
 
-void Client::toString(){
-    if(this->premium){
-        if(this->balance==-1){
-            std::cout<<"[Cliente "<<id<<"] Saldo: UNLIMITED"<<std::endl;
-        }else{
-            std::cout<<"[Cliente "<<id<<"] Saldo: "<<balance<<std::endl;
-        } 
-    }else{
-        std::cout<<"[Cliente "<<id<<"]"<<std::endl;
-    }
+void Client::toString() {
+    
 }
