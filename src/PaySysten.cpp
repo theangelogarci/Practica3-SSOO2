@@ -12,42 +12,35 @@
 *   Revision History: Se puede encontrar en el repositorio de GitHub.
 |*********************************************/
 
-#include <iostream>
-#include <condition_variable>
-//#include "Request.cpp"
-//#include "QueueProtected.cpp"
-
+#ifndef PAYS
+#define PAYS
 
 #include <iostream>
 #include <condition_variable>
-//#include "Request.cpp"
-//#include "QueueProtected.cpp"
+#include "Request.cpp"
+#include "QueueProtected.cpp"
 
 
 class PaySystem
 {
 private:
     std::condition_variable cv_queue;
-    //QueueProtected q_request;
+    QueueProtected q_request;
 
 public:
-    PaySystem();
-    void rechargeBalance();
-    void operator () ();
+    void operator () (QueueProtected requests);
 };
-void PaySystem::operator () (){
-        
-    }
 
-PaySystem::PaySystem()
-{
-}
-
-void PaySystem::rechargeBalance()
-{
-    if(!q_request.checkEmpty()){
-        Request r = q_request.remove();
-        r.setCredit(100);
-        q_request.add(r);
+void PaySystem::operator () (QueueProtected requests){
+    while(1){
+        if(!requests.checkEmpty()){
+            if(!q_request.checkEmpty()){
+                Request r = q_request.remove();
+                r.setCredit(100);
+                q_request.add(r);
+            }
+        }
     }
 }
+
+#endif

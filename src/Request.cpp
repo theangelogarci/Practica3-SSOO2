@@ -12,33 +12,38 @@
 *   Revision History: 
 |*********************************************/
 
-class Request {
-    private:
+#ifndef REQUEST
+#define REQUEST
 
-    int id;
-    float credit;
+#include <iostream>
+
+class Request{
+    private:
+        int id;
+        int credit;
 
     public:
-
-    Request(int id, float credit);
-    int getID();
-    float getCredit();
-    void setCredit(float credit);
+        Request(int id, int credit);
+        int getID();
+        int getCredit();
+        void setCredit(int credit);
 };
 
-Request::Request(int id, float credit) {
+Request::Request(int id, int credit){
     this->id = id;
     this->credit = credit;
 }
 
-int Request::getID() {
+int Request::getID(){
     return this->id;
 }
 
-float Request::getCredit(){
+int Request::getCredit(){
     return this->credit;
 }
 
-void Request::setCredit(float credit) {
-    this->credit = credit;
+void Request::setCredit(int credit){
+    this->credit=credit;
 }
+
+#endif

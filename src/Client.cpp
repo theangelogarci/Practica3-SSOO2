@@ -12,53 +12,82 @@
 *   Revision History: Se puede encontrar en el repositorio de GitHub.
 |*********************************************/
 
-#include <iostream>
-//#include <colours.h>
+#ifndef CLIENT
+#define CLIENT
 
-class Client
-{
+#include <iostream>
+#include <mutex>
+#include <atomic>
+#include <colours.h>
+#include "WordSearched.cpp"
+
+class Client{
     private:
         int id;
-        float balance;
+        int init_balance;
+        int balance;
+        std::string objective;
         bool premium;
+        
+    
     public:
-        Client(int id);
-        Client(int id, float balance);
+        Client(int id, std::string objective, int balance, int premium);
         void toString();
         int getId();
         float getBalance();
+        std::string getObjective();
         bool isPremium();
         void payCredit();
-        void restoreCredits();
-        void operator () ();
+        void restoreCredits();     
 };
 
-void Client::operator()() {
-    
-}
-
-Client::Client(int id) {
-
-}
-
-Client::Client (int id, float balance) {
-    this->id =id;
-    this->balance = balance;
-    this->premium = true;
+Client::Client(int id, std::string objective, int balance, int premium){
+    this->id=id;
+    if(premium){
+        if(rand()%2==0){
+            this->balance=-1;
+        }else{
+            this->balance=balance;
+        }
+    }else{
+        this->balance=2;
+    }
+    this->init_balance=this->balance;
+    this->objective = objective;
+    this->premium = premium;
     toString();
 }
 
-int Client::getId() {
+int Client::getId(){
     return this->id;
 }
-float Client::getBalance() {
+float Client::getBalance(){
     return this->balance;
 }
-
-bool Client::isPremium () {
+bool Client::isPremium(){
     return this->premium;
 }
-
-void Client::toString() {
-    
+void Client::payCredit(){
+    this->balance--;
 }
+void Client::restoreCredits(){
+    this->balance=this->init_balance;
+}
+
+std::string Client::getObjective(){
+    return this->objective;
+}
+
+void Client::toString(){
+    if(this->premium){
+        if(this->balance==-1){
+            std::cout<<BLUE<<"[Cliente "<<id<<"]"<<"-- Cuenta: Premium -- Palabra: "<<this->objective<<" -- Saldo: UNLIMITED"<<std::endl;
+        }else{
+            std::cout<<BLUE<<"[Cliente "<<id<<"] -- Cuenta: Premium -- Palabra: "<<this->objective<<" -- Saldo: "<<this->balance<<std::endl;
+        } 
+    }else{
+        std::cout<<BLUE<<"[Cliente "<<id<<"] Cuenta: Gratis -- Palabra: "<<this->objective<<" -- Saldo: "<<this->balance<<std::endl;
+    }
+}
+
+#endif
