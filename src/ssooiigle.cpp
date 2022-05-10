@@ -93,7 +93,7 @@ void list_dir(){
     std::string elem;
     std::string ss;
     if((directorio = opendir(dirPath.c_str()))){
-        while((elemento = readdir(directoriotd))){
+        while((elemento = readdir(directorio))){
             elem = elemento->d_name;
             if(elem != "." && elem!=".."){
                 vLibros.push_back(elem);

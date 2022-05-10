@@ -17,6 +17,9 @@
 
 #include <iostream>
 #include <condition_variable>
+#include <queue>
+#include <utility>
+#include <definitions.h>
 #include "Request.cpp"
 #include "QueueProtected.cpp"
 
@@ -24,23 +27,26 @@
 class PaySystem
 {
 private:
-    std::condition_variable cv_queue;
-    QueueProtected q_request;
 
 public:
-    void operator () (QueueProtected requests);
+    void operator () ();
 };
 
-void PaySystem::operator () (QueueProtected requests){
+/*Metodo que se estara ejcutando hasta que cambie la flag de control indicando la finalizacion del programa*/
+void PaySystem::operator () (){
     while(1){
         if(!requests.checkEmpty()){
-            if(!q_request.checkEmpty()){
-                Request r = q_request.remove();
-                r.setCredit(100);
-                q_request.add(r);
-            }
+            std::this_thread::sleep_for (std::chrono::seconds(1)); //Para añadir un poco de complejidad a la operación de recarga de saldo
+            Request r = std::move(requests.remove());
+            std::cout<<YELLOW<<"[PAYSYSTEM]"<<MAGENTA<<" Atendiendo la petición de recarga del Cliente "<<RED<<r.getID()<<RESET<<std::endl;
+            id_flag=r.getID();
+            credits=r.getCredit();
+            cv_queue.notify_all();
+        }else if(end_program){
+            break;
         }
     }
+    std::cout<<YELLOW<<"[PAYSYSTEM]"<<MAGENTA<<" Shutdown..."<<RESET<<std::endl;
 }
 
 #endif

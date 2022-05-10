@@ -3,12 +3,16 @@
 
 #include <queue>
 #include <mutex>
+#include <future>
 #include "Request.cpp"
+
 class QueueProtected
 {
 private:
-    std::queue<Request> queue;
+    std::mutex access;
+    
 public:
+    std::queue<Request> queueRequest;
     QueueProtected();
     void add(Request r);
     Request remove();
@@ -18,18 +22,23 @@ public:
 QueueProtected::QueueProtected()
 {
 }
+
+/*Metodo para verificar que la cola no este vacía*/
 bool QueueProtected::checkEmpty(){
-    return this->queue.empty();
+    std::unique_lock<std::mutex> ul(access);
+    return this->queueRequest.empty();
+    
 }
-
+/*Metodo para almacenar peticiones referenciadas en la cola*/
 void QueueProtected::add(Request r){
-    queue.push(r);
+    std::unique_lock<std::mutex> ul(access);
+    this->queueRequest.push(std::move(r)); 
 }
-
-
+/*Metodo que devuelve la primera peticón de la cola y la elimina de ella*/
 Request QueueProtected::remove(){
-    Request r = queue.front();
-    queue.pop();
+    std::unique_lock<std::mutex> ul(access);
+    Request r = std::move(this->queueRequest.front());
+    this->queueRequest.pop();
     return r;
 }
 #endif
