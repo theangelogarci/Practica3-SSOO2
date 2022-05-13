@@ -61,26 +61,11 @@ std::map<int,std::vector<WordSearched>> vWords;
 /* El main se encargara de la creación de hilos y su finalización*/
 int main(int argc, char *argv[]){
     int premium;
-    //int premium;
     std::string word;
     list_dir();
     for(int i = 0; i<NCLIENTS; i++){
         word = WORDS[(rand()%WORDS.size())];
         generateClient(i);
-        // if(i%2==0){
-        //     /**/
-        //     Client c(i,word);
-        //     vClients.push_back(std::thread(generateClient, std::ref(c)));
-        // }else{
-        //     premium = (rand()%2);
-        //     if(premium==0){
-        //         Client c(i,-1, word);
-        //         vClients.push_back(std::thread(generateClient, std::ref(c)));
-        //     }else{
-        //         Client c(i,100, word);
-        //         vClients.push_back(std::thread(generateClient, std::ref(c)));
-        //     }
-        // }
     }
     std::for_each(vThreads.begin(), vThreads.end(), std::mem_fn(&std::thread::join));
 
@@ -111,12 +96,6 @@ void generateClient(int id){
 
     sem.wait();
     vClients.push_back(Client());
-    /*
-    for (std::size_t i = 0; i < vLibros.size(); i++){
-        vSearch.push_back(std::thread(create_threads, vLibros[i], std::ref(c)));
-    }
-    std::for_each(vSearch.begin(), vSearch.end(), std::mem_fn(&std::thread::join));
-    */
     sem.signal();
 }
 
@@ -156,7 +135,6 @@ void create_threads(std::string file, Client& c){
         if(nLines%NTHREADS!= 0 && i==NTHREADS-1){ //Aquí se realiza un ajuste para el ultimo hilo en el caso que no sea exacta la división de total de lineas entre el número de hilos.
             end++;
         }
-        //vThreads.push_back(std::thread(find_word, i, assignedLines[i], begin, end, std::ref(c)));
     }
 
     std::for_each(vThreads.begin(), vThreads.end(), std::mem_fn(&std::thread::join));
@@ -172,7 +150,6 @@ void find_word(int thread,std::vector<std::string> assignedLines, int begin, int
         for(std::size_t position = 0; position< line.size(); position++){
             if(!analizeWord(c.getObjective()).compare(analizeWord(line[position]))){
                 if(c.getBalance()==0){
-                    //ps.rechargeBalance();
                 }else{
                     c.payCredit();
                 }

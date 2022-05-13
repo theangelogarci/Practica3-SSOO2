@@ -6,7 +6,7 @@
 #define LOG_PATH "./log"
 
 /*Valores estáticos*/
-#define NCLIENTS 50
+#define NCLIENTS 10
 #define NTHREADS 2
 #define BUFFER 4
 

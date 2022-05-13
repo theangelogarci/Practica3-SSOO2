@@ -287,7 +287,6 @@ std::map<int,std::vector<std::string>> shareLines(std::string file, int nLines){
 void printResult(std::map<int,std::vector<WordSearched>> vWords, Client c, std::mutex& access_log){
     for (std::size_t i = 0; i < vWords.size(); i++){
         for (std::size_t j = 0; j < vWords[i].size(); j++){
-            //vWords[i][j].toString(c.getId()); //Descomentar para que la terminal luzca bonita ;)
             access_log.lock();
             c.writeLog(vWords[i][j].returnString());
             access_log.unlock();
