@@ -202,8 +202,8 @@ void find_word(int thread,std::vector<std::string> assignedLines, int begin, int
             
             if(!analizeWord(c.getObjective()).compare(analizeWord(line[position]))){
                 access_balance.lock();
-                if (c.getBalance()!=-1){
-                    if(c.getBalance()==0 && !c.isPremium()){
+                if (c.getBalance()!=-1){ //Premium con saldo ilimitado
+                    if(c.getBalance()==0 && !c.isPremium()){ 
                         break;
 
                     }else if(c.getBalance()==0 && c.isPremium()){

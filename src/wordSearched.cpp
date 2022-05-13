@@ -38,8 +38,6 @@ public:
     std::string returnString();
 };
 
-
-
 WordSearched::WordSearched(std::string objetivo,int nThread, int begin, int end, int line, std::string word_before, std::string word, std::string word_after)
 {
     this->objetivo=objetivo;
