@@ -1,3 +1,0 @@
-[Cliente 4]:: Cuenta: Gratis :: Palabra: lineas :: Saldo:5
-[Hilo 1 inicio: 3264 – final: 6526] :: línea 3785:: ... las lineas de ...
-Tiempo de ejecución total: 4.375000 segundos.
